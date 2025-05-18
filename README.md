@@ -1,50 +1,64 @@
-# Welcome to your Expo app 👋
+# Task Manager
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple task management app built with React Native.
 
-## Get started
+## Setup Instructions
 
-1. Install dependencies
+1. Prerequisites
+   - Node.js
+   - npm or yarn
 
+2. Development Options
+
+   **Using Expo Go (Recommended for trying the app)**
+   - Android: Install Expo Go from Google Play Store
+   - iOS: Just need the default Camera app
+   
+   **Using Simulators**
+   - iOS: Xcode with iOS Simulator
+   - Android: Android Studio with AVD
+
+3. Installation
    ```bash
+   # Clone the repository
+   git clone https://github.com/pleroux64/Task-Manager.git
+   cd Task-Manager
+
+   # Install dependencies
    npm install
    ```
 
-2. Start the app
-
+4. Running the App
    ```bash
+   # Start the development server
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+   Then:
+   - Mobile device: Scan QR code with Expo Go (Android) or Camera (iOS)
+   - Simulators: Press 'i' for iOS or 'a' for Android
+   - Web: Press 'w'
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## How to Use
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. Adding Tasks
+   - Type your task in the input field
+   - Press the + button or hit return to add
 
-## Get a fresh project
+2. Managing Tasks
+   - Tap the checkbox to complete a task
+   - Tap the delete button to remove a task
+   - Tasks automatically move to "Completed" when checked
 
-When you're ready, run:
+## Features
 
-```bash
-npm run reset-project
-```
+- Add, complete, and delete tasks
+- Automatic task organization
+- Task count indicators
+- Clean, simple interface
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Libraries Used
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- React Native
+- Expo
+- @expo/vector-icons
