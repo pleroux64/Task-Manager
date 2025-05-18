@@ -7,12 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
-interface Task {
-  id: string;
-  text: string;
-  completed: boolean;
-}
+import { CHECKBOX_SIZE, COLORS, shadowStyle } from '../constants/styles';
+import { Task } from '../types/task';
 
 interface TaskItemProps {
   task: Task;
@@ -47,8 +43,8 @@ export default function TaskItem({
           >
             <MaterialCommunityIcons
               name="check"
-              size={18}
-              color={task.completed ? '#fff' : 'rgba(0, 0, 0, 0.2)'}
+              size={CHECKBOX_SIZE.icon}
+              color={task.completed ? COLORS.white : COLORS.iconLight}
               style={styles.checkIcon}
             />
           </View>
@@ -67,8 +63,8 @@ export default function TaskItem({
         >
           <MaterialCommunityIcons
             name="trash-can-outline"
-            size={18}
-            color="rgba(0, 0, 0, 0.3)"
+            size={CHECKBOX_SIZE.icon}
+            color={COLORS.iconMedium}
           />
         </TouchableOpacity>
       </View>
@@ -78,15 +74,11 @@ export default function TaskItem({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     borderRadius: 16,
     marginHorizontal: 16,
     marginVertical: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
+    ...shadowStyle,
   },
   content: {
     flexDirection: 'row',
@@ -95,28 +87,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   checkboxContainer: {
-    borderRadius: 20,
+    borderRadius: CHECKBOX_SIZE.container,
     padding: 4,
     marginRight: 12,
   },
   checkboxPressed: {
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    backgroundColor: COLORS.primaryLight,
   },
   checkbox: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: CHECKBOX_SIZE.box,
+    height: CHECKBOX_SIZE.box,
+    borderRadius: CHECKBOX_SIZE.box / 2,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
   },
   uncheckedBox: {
-    borderColor: '#007AFF',
+    borderColor: COLORS.primary,
   },
   checkedBox: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF',
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
   },
   checkIcon: {
     marginTop: -1,
@@ -124,7 +116,7 @@ const styles = StyleSheet.create({
   taskText: {
     flex: 1,
     fontSize: 16,
-    color: '#000',
+    color: COLORS.text,
     lineHeight: 22,
   },
   deleteButton: {

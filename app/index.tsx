@@ -8,22 +8,25 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TextStyle,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 import TaskItem from '../components/TaskItem';
+import { COLORS, FONT, SPACING, shadowStyle } from '../constants/styles';
 import { Task } from '../types/task';
 
 /**
- * Main screen of the Task Manager app.
- * Handles task input, creation, completion toggling, and deletion.
+ * Main task management screen.
+ * Handles creating, completing, and deleting tasks,
+ * with separate sections for todo and completed items.
  */
 export default function Index() {
-  // State
   const [taskText, setTaskText] = useState('');
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // Derived state
+  // Split tasks into todo and completed sections
   const sections = useMemo(() => {
     const todoTasks = tasks.filter(t => !t.completed);
     const completedTasks = tasks.filter(t => t.completed);
@@ -34,7 +37,6 @@ export default function Index() {
     ];
   }, [tasks]);
 
-  // Task operations
   const addTask = () => {
     if (!taskText.trim()) {
       Alert.alert('Error', 'Task cannot be empty');
@@ -60,14 +62,25 @@ export default function Index() {
   };
 
   // UI Components
+  /**
+   * Renders a section header with title and task count.
+   * Also handles empty state message for the To Do section.
+   */
   const renderSectionHeader = ({ section: { title, data } }: {
     section: { title: string; data: Task[] }
   }) => (
-    <View style={styles.sectionHeader}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <View style={styles.countBadge}>
-        <Text style={styles.taskCount}>{data.length}</Text>
+    <View>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>{title}</Text>
+        <View style={styles.countBadge}>
+          <Text style={styles.taskCount}>{data.length}</Text>
+        </View>
       </View>
+      {title === 'To Do' && data.length === 0 && (
+        <Text style={[styles.emptyMessage, { marginTop: SPACING.vertical.md }]}>
+          No tasks to do
+        </Text>
+      )}
     </View>
   );
 
@@ -79,6 +92,9 @@ export default function Index() {
     />
   );
 
+  const trimmedText = taskText.trim();
+  const isValidTask = trimmedText.length > 0;
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -87,12 +103,12 @@ export default function Index() {
     >
       <Text style={styles.title}>Tasks</Text>
 
-      {/* Task input */}
+      {/* Task input field and add button */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Add a new task..."
-          placeholderTextColor="rgba(0, 0, 0, 0.4)"
+          placeholderTextColor={COLORS.textLight}
           value={taskText}
           onChangeText={setTaskText}
           returnKeyType="done"
@@ -101,13 +117,13 @@ export default function Index() {
         />
         <TouchableOpacity
           onPress={addTask}
-          style={[styles.addButton, !taskText.trim() && styles.addButtonDisabled]}
-          disabled={!taskText.trim()}
+          style={[styles.addButton, !isValidTask && styles.addButtonDisabled]}
+          disabled={!isValidTask}
         >
           <MaterialCommunityIcons
             name="plus"
             size={22}
-            color={taskText.trim() ? 'white' : 'rgba(0, 0, 0, 0.2)'}
+            color={isValidTask ? COLORS.white : COLORS.textLight}
           />
         </TouchableOpacity>
       </View>
@@ -118,9 +134,6 @@ export default function Index() {
         keyExtractor={item => item.id}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
-        ListEmptyComponent={
-          <Text style={styles.emptyMessage}>No tasks to do</Text>
-        }
         stickySectionHeadersEnabled={false}
       />
     </KeyboardAvoidingView>
@@ -130,84 +143,80 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F9F9',
-  },
+    backgroundColor: COLORS.background,
+  } as ViewStyle,
   title: {
-    fontSize: 34,
-    fontWeight: 'bold',
-    color: '#000',
-    marginHorizontal: 16,
+    fontSize: FONT.title.size,
+    fontWeight: FONT.title.weight,
+    color: COLORS.text,
+    marginHorizontal: SPACING.horizontal,
     marginTop: 60,
-    marginBottom: 24,
-  },
+    marginBottom: SPACING.vertical.lg,
+  } as TextStyle,
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 16,
-    marginBottom: 32,
-  },
+    marginHorizontal: SPACING.horizontal,
+    marginBottom: SPACING.vertical.xl,
+  } as ViewStyle,
   input: {
     flex: 1,
     height: 50,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     borderRadius: 16,
     paddingHorizontal: 20,
-    fontSize: 16,
-    marginRight: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
-  },
+    fontSize: FONT.task.size,
+    marginRight: SPACING.vertical.md,
+    ...shadowStyle,
+  } as TextStyle,
   addButton: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#007AFF',
+    backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#007AFF',
-    shadowOffset: { width: 0, height: 2 },
+    ...shadowStyle,
+    shadowColor: COLORS.primary,
     shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 2,
-  },
+  } as ViewStyle,
   addButtonDisabled: {
-    backgroundColor: '#F0F0F0',
-  },
+    backgroundColor: COLORS.disabled,
+  } as ViewStyle,
   listContent: {
-    paddingBottom: 40,
-  },
+    paddingBottom: SPACING.vertical.xxl,
+  } as ViewStyle,
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 16,
-    marginBottom: 12,
-    paddingTop: 32,
-  },
+    marginHorizontal: SPACING.horizontal,
+    marginBottom: SPACING.vertical.md,
+    paddingTop: SPACING.vertical.lg,
+    minHeight: 60,
+    backgroundColor: COLORS.background,
+  } as ViewStyle,
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#000',
-  },
+    fontSize: FONT.section.size,
+    fontWeight: FONT.section.weight,
+    color: COLORS.text,
+  } as TextStyle,
   countBadge: {
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    backgroundColor: COLORS.primaryLight,
+    paddingHorizontal: SPACING.vertical.md,
+    paddingVertical: SPACING.vertical.xs,
     borderRadius: 12,
-  },
+  } as ViewStyle,
   taskCount: {
-    fontSize: 14,
-    color: '#007AFF',
-    fontWeight: '500',
-  },
+    fontSize: FONT.task.size,
+    color: COLORS.primary,
+    fontWeight: FONT.task.weight,
+  } as TextStyle,
   emptyMessage: {
     textAlign: 'center',
-    color: 'rgba(0, 0, 0, 0.4)',
-    fontSize: 16,
-    marginTop: 20,
-    fontWeight: '500',
-  },
+    color: COLORS.textLight,
+    fontSize: FONT.task.size,
+    marginTop: SPACING.vertical.lg,
+    fontWeight: FONT.task.weight,
+  } as TextStyle,
 });

@@ -1,24 +1,25 @@
 # Task Manager
 
-A simple task management app built with React Native.
+A simple task management application built with React Native.
+
+## Features
+
+- Add and delete tasks
+- Mark tasks as complete/incomplete
+- Tasks organized in "To Do" and "Completed" sections
+- Visual feedback for all user interactions
+- Clean, responsive interface
 
 ## Setup Instructions
 
 1. Prerequisites
    - Node.js
    - npm or yarn
+   - Expo Go app (required for both Android and iOS)
+     * Android: Install Expo Go and use it to scan QR code
+     * iOS: Install Expo Go and scan QR code with Camera app
 
-2. Development Options
-
-   **Using Expo Go (Recommended for trying the app)**
-   - Android: Install Expo Go from Google Play Store
-   - iOS: Just need the default Camera app
-   
-   **Using Simulators**
-   - iOS: Xcode with iOS Simulator
-   - Android: Android Studio with AVD
-
-3. Installation
+2. Installation
 
    Clone the repository:
    ```bash
@@ -35,7 +36,7 @@ A simple task management app built with React Native.
    npm install
    ```
 
-4. Running the App
+3. Running the App
 
    Start the development server:
    ```bash
@@ -43,30 +44,33 @@ A simple task management app built with React Native.
    ```
 
    Then:
-   - Mobile device: Scan QR code with Expo Go (Android) or Camera (iOS)
-   - Simulators: Press 'i' for iOS or 'a' for Android
-   - Web: Press 'w'
+   - Android: Open Expo Go and scan QR code
+   - iOS: Use Camera to scan QR code (opens in Expo Go)
+   - Press 'i' for iOS simulator
+   - Press 'a' for Android emulator
 
 ## How to Use
 
 1. Adding Tasks
-   - Type your task in the input field
-   - Press the + button or hit return to add
+   - Type task in the input field
+   - Press + button or return to add
 
 2. Managing Tasks
-   - Tap the checkbox to complete a task
-   - Tap the delete button to remove a task
-   - Tasks automatically move to "Completed" when checked
+   - Tap checkbox to complete/incomplete
+   - Tap trash icon to delete
+   - Completed tasks automatically move to "Completed" section
 
-## Features
+## Third-Party Libraries
 
-- Add, complete, and delete tasks
-- Automatic task organization
-- Task count indicators
-- Clean, simple interface
+- **React Native** - Used for the task list interface and input field
+- **React** - Handles task state management with hooks
+- **Expo** - Provides our development and testing environment
+- **@expo/vector-icons** - Used for task action buttons
+- **TypeScript** - Ensures type safety in task structure and props
 
-## Libraries Used
+## File Structure
 
-- React Native
-- Expo
-- @expo/vector-icons
+- `components/` – Contains `TaskItem`, the reusable task component
+- `constants/` – Shared style values like colors, font sizes, spacing
+- `types/` – TypeScript interfaces (e.g., `Task`)
+- `app/` – Main screen (`index.tsx`) that handles task logic and layout
