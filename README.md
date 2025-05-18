@@ -19,18 +19,26 @@ A simple task management app built with React Native.
    - Android: Android Studio with AVD
 
 3. Installation
-   ```bash
-   # Clone the repository
-   git clone https://github.com/pleroux64/Task-Manager.git
-   cd Task-Manager
 
-   # Install dependencies
+   Clone the repository:
+   ```bash
+   git clone https://github.com/pleroux64/Task-Manager.git
+   ```
+
+   Navigate to project directory:
+   ```bash
+   cd Task-Manager
+   ```
+
+   Install dependencies:
+   ```bash
    npm install
    ```
 
 4. Running the App
+
+   Start the development server:
    ```bash
-   # Start the development server
    npx expo start
    ```
 
