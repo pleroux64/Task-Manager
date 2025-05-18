@@ -26,7 +26,7 @@ export default function Index() {
   const [taskText, setTaskText] = useState('');
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // Split tasks into todo and completed sections
+  // Memoized to prevent unnecessary re-renders on every input change
   const sections = useMemo(() => {
     const todoTasks = tasks.filter(t => !t.completed);
     const completedTasks = tasks.filter(t => t.completed);
@@ -61,11 +61,6 @@ export default function Index() {
     setTasks(prev => prev.filter(task => task.id !== id));
   };
 
-  // UI Components
-  /**
-   * Renders a section header with title and task count.
-   * Also handles empty state message for the To Do section.
-   */
   const renderSectionHeader = ({ section: { title, data } }: {
     section: { title: string; data: Task[] }
   }) => (
@@ -97,13 +92,13 @@ export default function Index() {
 
   return (
     <KeyboardAvoidingView
+      // iOS requires padding adjustment, Android handles it automatically
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
     >
       <Text style={styles.title}>Tasks</Text>
 
-      {/* Task input field and add button */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}

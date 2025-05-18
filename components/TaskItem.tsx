@@ -27,38 +27,43 @@ export default function TaskItem({
   return (
     <View style={styles.card}>
       <View style={styles.content}>
-        {/* Checkbox circle */}
+        {/* Pressable checkbox with visual feedback on press */}
         <Pressable
           onPress={onToggleComplete}
           style={({ pressed }) => [
             styles.checkboxContainer,
+            // Apply pressed state styling for visual feedback
             pressed && styles.checkboxPressed,
           ]}
         >
+          {/* Checkbox circle with dynamic styling based on completion state */}
           <View
             style={[
               styles.checkbox,
+              // Switch between completed and incomplete styling
               task.completed ? styles.checkedBox : styles.uncheckedBox,
             ]}
           >
             <MaterialCommunityIcons
               name="check"
               size={CHECKBOX_SIZE.icon}
+              // Icon color changes based on completion state
               color={task.completed ? COLORS.white : COLORS.iconLight}
               style={styles.checkIcon}
             />
           </View>
         </Pressable>
 
-        {/* Task text */}
+        {/* Task text with 2-line limit to maintain consistent card height */}
         <Text style={styles.taskText} numberOfLines={2}>
           {task.text}
         </Text>
 
-        {/* Delete icon */}
+        {/* Delete button with expanded touch target for better UX */}
         <TouchableOpacity
           onPress={onDelete}
           style={styles.deleteButton}
+          // Expanded touch target for better mobile interaction
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <MaterialCommunityIcons
